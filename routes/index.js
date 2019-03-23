@@ -20,6 +20,10 @@ const roomJSON = {name:String, users:[String], messages:[{user:String, message:S
 const roomSchema = mongoose.Schema(roomJSON);
 const roomModel = mongoose.model('Room', roomSchema, "Rooms");
 
+var http = require('http').Server(router);
+var io = require('socket.io')(http);
+
+io.on('connection', () => {console.log('a user is connected')});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -75,11 +79,11 @@ router.post('/API/createRoom', function(req, res, next) {
 
 router.post('/API/sendMessage', function(req, res, next) {
 	if(req.query.roomName === undefined || req.query.roomName.length === 0) {
-		res.sendStatus(201);
+		res.sendStatus(400);
 		return;
 	}
 	if(req.query.message === undefined || req.query.message.length === 0) {
-		res.sendStatus(201);
+		res.sendStatus(400);
 		return;
 	}
 	if(req.query.user === undefined || req.query.user.length === 0) {
@@ -90,6 +94,7 @@ router.post('/API/sendMessage', function(req, res, next) {
 		if(room) {
 			console.log(room);
 			console.log("added message");
+			io.emit('message', message);
 			res.sendStatus(201);
 		}
 	});
