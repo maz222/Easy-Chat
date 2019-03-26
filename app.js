@@ -43,4 +43,23 @@ var http = require('http');
 var server = http.createServer(app);
 server.listen(4000);
 
+var io = require('socket.io').listen(server);
+io.on('connection', (socket) => {
+	console.log('a user connected');
+	socket.on('disconnect', () => {console.log('a user disconnected');});
+	socket.on('room created', (room) => {
+		console.log('room created');
+		console.log(room);
+		io.emit('room created', room);
+	})
+	socket.on('message sent', (message) => {
+		console.log('message sent');
+		console.log(message);
+		io.emit('message sent', message);
+	})
+});
+
+
+
+
 module.exports = app;
