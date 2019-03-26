@@ -23,7 +23,7 @@ const roomModel = mongoose.model('Room', roomSchema, "Rooms");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.sendFile('index.html', {root: "../frontend"});
+	res.sendFile('index.html', {root: "../frontend/build"});
 });
 
 //get a list of room names
