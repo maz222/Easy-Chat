@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const path = require('path');
 
 const dbUser = "master";
 const dbPass = "master1";
@@ -20,11 +19,6 @@ mongoose.connection.on('open', () => {
 const roomJSON = {name:String, users:[String], messages:[{user:String, message:String}]};
 const roomSchema = mongoose.Schema(roomJSON);
 const roomModel = mongoose.model('Room', roomSchema, "Rooms");
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-	res.sendFile('index.html', {root: "../frontend/build"});
-});
 
 //get a list of room names
 router.get('/API/rooms', function(req, res, next) {
