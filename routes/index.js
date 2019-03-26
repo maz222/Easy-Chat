@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const path = require('path');
 
 const dbUser = "master";
 const dbPass = "master1";
@@ -22,7 +23,7 @@ const roomModel = mongoose.model('Room', roomSchema, "Rooms");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	res.sendFile(path.join(__dirname) + '/fonrend/build/index.html');
 });
 
 //get a list of room names
