@@ -51,11 +51,22 @@ io.on('connection', (socket) => {
 		console.log('room created');
 		console.log(room);
 		io.emit('room created', room);
-	})
+		socket.join(room.roomName);
+	});
 	socket.on('message sent', (message) => {
 		console.log('message sent');
 		console.log(message);
-		io.emit('message sent', message);
+		io.to(message.roomName).emit('message sent', message);
+	});
+	socket.on('joined room', (room) => {
+		console.log('joined room');
+		console.log(room);
+		socket.join(room.roomName);
+	});
+	socket.on('left room', (room) => {
+		console.log('left room');
+		console.log(room);
+		socket.leave(room.roomName);
 	})
 });
 

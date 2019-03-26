@@ -54,6 +54,10 @@ router.get('/API/roomUsers', function(req, res, next) {
 
 router.post('/API/createRoom', function(req, res, next) {
 	console.log(req.query.roomName);
+	if(req.query.roomName === undefined || req.query.roomName.length === 0) {
+		res.sendStatus(400);
+		return;
+	}
 	roomModel.findOne({name:req.query.roomName}).exec((err, room) => {
 		//room already exists; exit
 		if(room) {
