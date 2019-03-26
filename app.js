@@ -41,7 +41,7 @@ app.use(function(err, req, res, next) {
 
 var http = require('http');
 var server = http.createServer(app);
-server.listen(provess.env.PROP || 4000);
+server.listen(process.env.PROP || 4000);
 
 var io = require('socket.io').listen(server);
 io.on('connection', (socket) => {
