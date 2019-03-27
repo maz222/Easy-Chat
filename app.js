@@ -38,6 +38,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', function(req, res) {
+	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
+
 var http = require('http');
 var server = http.createServer(app);
 server.listen(process.env.PORT || 4000);
@@ -67,11 +72,6 @@ io.on('connection', (socket) => {
 		console.log(room);
 		socket.leave(room.roomName);
 	})
-});
-
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('*', function(req, res) {
-	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
 module.exports = app;
